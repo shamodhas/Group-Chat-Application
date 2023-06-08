@@ -24,6 +24,7 @@ public class ClientHandler implements Runnable{
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
             this.dataInputStream = new DataInputStream(socket.getInputStream());
 
+
             this.clientUserName = dataInputStream.readUTF();
             clientHandlers.add(this);
             broadCastTextMessage(this, "server : "+clientUserName+" has entered tha chat!");
@@ -42,11 +43,11 @@ public class ClientHandler implements Runnable{
     private void incomingMessage() {
         while (socket.isConnected()){
             try {
-                String message = dataInputStream.readUTF();
-                if (message.equals("image")){
+//                String message = dataInputStream.readUTF();
+                if (dataInputStream.readBoolean()){
                     broadCastImage(this);
                 }else {
-                    broadCastTextMessage(this, message);
+                    broadCastTextMessage(this, dataInputStream.readUTF());
                 }
             }catch (IOException e){
                 // closed
@@ -61,15 +62,16 @@ public class ClientHandler implements Runnable{
         for (ClientHandler clientHandler: clientHandlers){
             try {
                 if (client != clientHandler){
-                    String utf = dataInputStream.readUTF();
-                    int size = dataInputStream.readInt();
+                    String utf = clientHandler.dataInputStream.readUTF();
+                    int size = clientHandler.dataInputStream.readInt();
                     byte[] bytes = new byte[size];
-                    dataInputStream.readFully(bytes);
+                    clientHandler.dataInputStream.readFully(bytes);
 
-                    dataOutputStream.writeUTF(utf);
-                    dataOutputStream.writeInt(bytes.length);
-                    dataOutputStream.write(bytes);
-                    dataOutputStream.flush();
+                    clientHandler.dataOutputStream.writeBoolean(true);
+//                    clientHandler.dataOutputStream.writeUTF(utf);
+                    clientHandler.dataOutputStream.writeInt(bytes.length);
+                    clientHandler.dataOutputStream.write(bytes);
+                    clientHandler.dataOutputStream.flush();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,6 +84,7 @@ public class ClientHandler implements Runnable{
         for (ClientHandler clientHandler: clientHandlers){
             try {
                 if (client != clientHandler){
+                    clientHandler.dataOutputStream.writeBoolean(false);
                     clientHandler.dataOutputStream.writeUTF(messageToSent);
                     clientHandler.dataOutputStream.flush();
                 }

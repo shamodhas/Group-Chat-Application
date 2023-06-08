@@ -44,6 +44,7 @@ public class ChatFormController implements Initializable {
     public void close() {
         try {
             String mes = ChatFormController.userName + " has left the chat ";
+            dataOutputStream.writeBoolean(false);
             dataOutputStream.writeUTF(mes);
             dataOutputStream.flush();
         } catch (IOException e) {
@@ -58,6 +59,7 @@ public class ChatFormController implements Initializable {
             this.socket = new Socket("localhost", 1235);
             this.dataInputStream = new DataInputStream(socket.getInputStream());
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeBoolean(false);
             dataOutputStream.writeUTF(userName);
             dataOutputStream.flush();
             new Thread(new Runnable() {
@@ -65,12 +67,11 @@ public class ChatFormController implements Initializable {
                 public void run() {
                     while (socket.isConnected()){
                         try {
-                            System.out.println(dataInputStream.available());
-                            String message = dataInputStream.readUTF();
-                            if (message.equals("%*%image%*%")){
+//                            String message = dataInputStream.readUTF();
+                            if (dataInputStream.readBoolean()){
                                 receivingImage();
                             }else {
-                                receivingTextMessage(message);
+                                receivingTextMessage(dataInputStream.readUTF());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -139,6 +140,7 @@ public class ChatFormController implements Initializable {
 
                 vBox.getChildren().add(hBox);
 
+                dataOutputStream.writeBoolean(false);
                 dataOutputStream.writeUTF(textMessage);
                 dataOutputStream.flush();
             }
@@ -169,7 +171,8 @@ public class ChatFormController implements Initializable {
                 hBox.getChildren().addAll(imageView);
                 vBox.getChildren().add(hBox);
 
-                dataOutputStream.writeUTF("%*%image%*%");
+//                dataOutputStream.writeUTF("%*%image%*%");
+                dataOutputStream.writeBoolean(true);
                 dataOutputStream.writeInt(bytes.length);
                 dataOutputStream.write(bytes);
                 dataOutputStream.flush();
