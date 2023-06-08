@@ -97,16 +97,16 @@ public class ChatFormController implements Initializable {
 
     private void receivingImage() {
         try {
-            String utf = dataInputStream.readUTF();
+//            String utf = dataInputStream.readUTF();
             int size = dataInputStream.readInt();
             byte[] bytes = new byte[size];
             dataInputStream.readFully(bytes);
-            System.out.println(userName + "- Image received: from " + utf);
+            System.out.println(userName + "- Image received: from ");
 
             HBox hBox = new HBox();
-            Label messageLbl = new Label(utf);
-            messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
-            hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; " + (utf.equals(userName) ? "-fx-alignment: center-right;" : "-fx-alignment: center-left;"));
+            Label messageLbl = new Label(userName);
+            messageLbl.setStyle("-fx-background-color: #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+            hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; -fx-alignment: center-right;");
 
             Platform.runLater(()->{
                 ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(bytes)));
@@ -164,6 +164,7 @@ public class ChatFormController implements Initializable {
 
                 // Display the image in an ImageView or any other UI component
                 ImageView imageView = new ImageView(new Image(new FileInputStream(selectedFile)));
+
                 imageView.setStyle("-fx-padding: 10px;");
                 imageView.setFitHeight(180);
                 imageView.setFitWidth(100);
