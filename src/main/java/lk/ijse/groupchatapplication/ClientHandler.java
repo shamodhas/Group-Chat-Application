@@ -13,13 +13,24 @@ import java.util.ArrayList;
  */
 
 public class ClientHandler implements Runnable{
-    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    private static final ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Socket socket;
     private String clientUserName;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
     public ClientHandler(Socket socket) {
+        try {
+            this.socket = socket;
+            this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            this.dataInputStream = new DataInputStream(socket.getInputStream());
 
+            this.clientUserName = dataInputStream.readUTF();
+            clientHandlers.add(this);
+            broadCastTextMessage(this, "server : "+clientUserName+" has entered tha chat!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            closeEverything(socket, dataOutputStream, dataInputStream);
+        }
     }
 
 
@@ -29,11 +40,14 @@ public class ClientHandler implements Runnable{
     }
 
     private void incomingMessage() {
-        String messageFromClient;
         while (socket.isConnected()){
             try {
-                messageFromClient = dataInputStream.readUTF();
-                broadCastMessage(this, messageFromClient);
+                String message = dataInputStream.readUTF();
+                if (message.equals("image")){
+                    broadCastImage(this);
+                }else {
+                    broadCastTextMessage(this, message);
+                }
             }catch (IOException e){
                 // closed
                 e.printStackTrace();
@@ -43,7 +57,28 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    private void broadCastMessage(ClientHandler client, String messageToSent) {
+    private void broadCastImage(ClientHandler client) {
+        for (ClientHandler clientHandler: clientHandlers){
+            try {
+                if (client != clientHandler){
+                    String utf = dataInputStream.readUTF();
+                    int size = dataInputStream.readInt();
+                    byte[] bytes = new byte[size];
+                    dataInputStream.readFully(bytes);
+
+                    dataOutputStream.writeUTF(utf);
+                    dataOutputStream.writeInt(bytes.length);
+                    dataOutputStream.write(bytes);
+                    dataOutputStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                closeEverything(socket, dataOutputStream, dataInputStream);
+            }
+        }
+    }
+
+    private void broadCastTextMessage(ClientHandler client, String messageToSent) {
         for (ClientHandler clientHandler: clientHandlers){
             try {
                 if (client != clientHandler){
@@ -51,6 +86,7 @@ public class ClientHandler implements Runnable{
                     clientHandler.dataOutputStream.flush();
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 closeEverything(socket, dataOutputStream, dataInputStream);
             }
         }
@@ -59,7 +95,6 @@ public class ClientHandler implements Runnable{
     public void removeClientHandler(){
         clientHandlers.remove(this);
         System.out.println("close");
-        broadCastMessage(this, "Server : "+clientUserName+" has left the chat");
     }
 
     private void closeEverything(Socket socket, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
@@ -74,7 +109,7 @@ public class ClientHandler implements Runnable{
             if (dataInputStream != null){
                 dataInputStream.close();
             }
-        } catch (IOException e) {e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

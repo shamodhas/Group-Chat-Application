@@ -38,6 +38,12 @@ public class ChatFormController implements Initializable {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
+    public static void close() {
+        String mes = ChatFormController.userName + " has left the chat ";
+//        sendTextMessage(mes);
+        System.exit(0);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -63,6 +69,7 @@ public class ChatFormController implements Initializable {
                     }
                 }
             }).start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,8 +114,12 @@ public class ChatFormController implements Initializable {
 
     @FXML
     public void messageSendOnAction(ActionEvent actionEvent) {
+        String textMessage = txtMessage.getText();
+        sendTextMessage(textMessage);
+    }
+
+    private void sendTextMessage(String textMessage) {
         try {
-            String textMessage = txtMessage.getText();
             if (textMessage != null){
                 HBox hBox = new HBox();
                 hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
@@ -155,6 +166,4 @@ public class ChatFormController implements Initializable {
             }
         }
     }
-
-
 }
