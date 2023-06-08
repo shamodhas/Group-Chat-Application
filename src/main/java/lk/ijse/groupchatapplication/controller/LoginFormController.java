@@ -23,7 +23,7 @@ public class LoginFormController {
 
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/lk/ijse/groupchatapplication/view/ChatForm.fxml"))));
         stage.setOnCloseRequest(event -> {
-            ChatFormController.close();
+//            ChatFormController.close();
             System.exit(0);
         });
         stage.show();

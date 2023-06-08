@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -33,14 +34,21 @@ public class ChatFormController implements Initializable {
     public ScrollPane scPane;
     @FXML
     public TextField txtMessage;
+    @FXML
+    public VBox vBox;
     public static String userName;
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public static void close() {
-        String mes = ChatFormController.userName + " has left the chat ";
-//        sendTextMessage(mes);
+    public void close() {
+        try {
+            String mes = ChatFormController.userName + " has left the chat ";
+            dataOutputStream.writeUTF(mes);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 
@@ -57,6 +65,7 @@ public class ChatFormController implements Initializable {
                 public void run() {
                     while (socket.isConnected()){
                         try {
+                            System.out.println(dataInputStream.available());
                             String message = dataInputStream.readUTF();
                             if (message.equals("%*%image%*%")){
                                 receivingImage();
@@ -82,7 +91,7 @@ public class ChatFormController implements Initializable {
         Label messageLbl = new Label(message);
         messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
-//        Platform.runLater(() -> need add sc pane);
+        Platform.runLater(() -> vBox.getChildren().add(hBox));
     }
 
     private void receivingImage() {
@@ -106,7 +115,7 @@ public class ChatFormController implements Initializable {
 
                 hBox.getChildren().addAll(messageLbl, imageView);
 
-                // need add sc pane
+                vBox.getChildren().add(hBox);
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -127,7 +136,9 @@ public class ChatFormController implements Initializable {
                 Label messageLbl = new Label(textMessage);
                 messageLbl.setStyle("-fx-background-color:  purple;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
                 hBox.getChildren().add(messageLbl);
-//                vBox.getChildren().add(hBox); need add sc pane
+
+                vBox.getChildren().add(hBox);
+
                 dataOutputStream.writeUTF(textMessage);
                 dataOutputStream.flush();
             }
@@ -156,7 +167,7 @@ public class ChatFormController implements Initializable {
                 imageView.setFitWidth(100);
 
                 hBox.getChildren().addAll(imageView);
-//                vBox.getChildren().add(hBox); need add sc pane
+                vBox.getChildren().add(hBox);
 
                 dataOutputStream.writeUTF("%*%image%*%");
                 dataOutputStream.writeInt(bytes.length);
