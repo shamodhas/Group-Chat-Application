@@ -58,13 +58,14 @@ public class ChatFormController implements Initializable {
                     while (socket.isConnected()){
                         try {
                             String message = dataInputStream.readUTF();
-                            if (message.equals("image")){
+                            if (message.equals("%*%image%*%")){
                                 receivingImage();
                             }else {
                                 receivingTextMessage(message);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
+                            break;
                         }
                     }
                 }
@@ -157,7 +158,7 @@ public class ChatFormController implements Initializable {
                 hBox.getChildren().addAll(imageView);
 //                vBox.getChildren().add(hBox); need add sc pane
 
-                dataOutputStream.writeUTF("*image*");
+                dataOutputStream.writeUTF("%*%image%*%");
                 dataOutputStream.writeInt(bytes.length);
                 dataOutputStream.write(bytes);
                 dataOutputStream.flush();
