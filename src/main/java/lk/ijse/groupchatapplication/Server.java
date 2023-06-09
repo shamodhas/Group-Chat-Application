@@ -13,23 +13,23 @@ import java.util.List;
  */
 
 public class Server {
-    private ServerSocket serverSocket;
     private List<ClientHandler> clients;
 
     public Server(int port) {
         try {
-            serverSocket = new ServerSocket(port);
+            ServerSocket serverSocket = new ServerSocket(port);
             clients = new ArrayList<>();
             System.out.println("Server started on port " + port);
             while (true) {
                 try {
-                    Socket clientSocket = serverSocket.accept();
-                    System.out.println("New client connected: " + clientSocket);
-                    ClientHandler clientHandler = new ClientHandler(clientSocket, this);
+                    Socket socket = serverSocket.accept();
+                    System.out.println("New client connected: " + socket);
+                    ClientHandler clientHandler = new ClientHandler(socket, this);
                     clients.add(clientHandler);
                     clientHandler.start();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
         } catch (IOException e) {
@@ -47,7 +47,6 @@ public class Server {
     }
 
     public void removeClient(ClientHandler client) {
-        broadcastMessage(client, "left the chat ..!");
         clients.remove(client);
     }
 
