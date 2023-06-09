@@ -15,6 +15,7 @@
       </ScrollPane>
       <TextField fx:id="txtMessage" layoutX="14.0" layoutY="361.0" prefHeight="25.0" prefWidth="427.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="159.0" />
       <Button layoutX="451.0" layoutY="361.0" mnemonicParsing="false" onAction="#messageSendOnAction" text="send" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="107.0" />
-      <Button layoutX="510.0" layoutY="361.0" mnemonicParsing="false" onAction="#imgSendOnAction" text="img" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="53.0" />
+      <Button layoutX="500.0" layoutY="361.0" mnemonicParsing="false" onAction="#imgSendOnAction" text="img" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="63.0" />
+      <Button layoutX="549.0" layoutY="361.0" mnemonicParsing="false" onAction="#emojiSendOnAction" text="img" />
    </children>
 </AnchorPane>
