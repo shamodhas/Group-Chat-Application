@@ -5,3 +5,12 @@
     -fx-text-fill: #eeeeee;
     -fx-font-family: Arial !important;
 }
+.left-pane{
+    -fx-background-color: #B0D8DA;
+    -fx-background-radius: 36px 0 0 36px;
+    -fx-border-radius: 36px 0 0 36px;
+}
+.right-pane{
+    -fx-background-color: #fff;
+    -fx-background-radius: 36px 0 0 36px;
+}
