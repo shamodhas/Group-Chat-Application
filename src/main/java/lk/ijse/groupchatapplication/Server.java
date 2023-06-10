@@ -38,7 +38,6 @@ public class Server {
     }
 
     public void broadcastMessage(ClientHandler clientHandler, String message) {
-        message = clientHandler.getUserName() +" : "+message;
         for (ClientHandler client : clients) {
             if (client != clientHandler) {
                 client.sendMessage(message);

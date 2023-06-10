@@ -23,7 +23,7 @@ public class ClientHandler extends Thread {
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.setUserName(bufferedReader.readLine());
             this.server = server;
-            this.server.broadcastMessage(this, userName+" join to chat ..!");
+            this.server.broadcastMessage(this, userName+"/#sendingClientName#/"+"hello i'm join your to chat ..!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,19 +46,17 @@ public class ClientHandler extends Thread {
                     server.broadcastMessage(this, message);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                server.broadcastMessage(this, userName+"/#sendingClientName#/"+"i'm left the chat ..!");
+                server.removeClient(this);
                 break;
-            } finally {
-                try {
-                    server.broadcastMessage(this, "left the chat ..!");
-                    bufferedReader.close();
-                    bufferedWriter.close();
-                    socket.close();
-                    server.removeClient(this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
+        }
+        try {
+            bufferedReader.close();
+            bufferedWriter.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
