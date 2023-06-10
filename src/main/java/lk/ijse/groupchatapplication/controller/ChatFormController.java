@@ -76,17 +76,17 @@ public class ChatFormController implements Initializable {
                                 imageView.setPreserveRatio(true);
                                 HBox imageHbox = new HBox(imageView);
                                 Label lblName = new Label(clientName);
-                                lblName.setStyle("-fx-background-color: blue;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: white;-fx-alignment: center;-fx-padding: 5px;");
-                                imageHbox.setStyle("-fx-background-color: blue;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
+                                lblName.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
+                                imageHbox.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
                                 HBox hBox = new HBox(lblName, imageHbox);
                                 hBox.setSpacing(10);
                                 hBox.setStyle("-fx-alignment: center-left;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
                                 vBox.getChildren().add(hBox);
                             } else {
                                 Label messageLabel = new Label(message);
-                                messageLabel.setStyle("-fx-background-color: blue;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: white;-fx-alignment: center;-fx-padding: 5px;");
+                                messageLabel.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
                                 Label lblName = new Label(clientName);
-                                lblName.setStyle("-fx-background-color: blue;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: white;-fx-alignment: center;-fx-padding: 5px;");
+                                lblName.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
                                 HBox hBox = new HBox(lblName, messageLabel);
                                 hBox.setSpacing(10);
                                 hBox.setStyle("-fx-alignment: center-lefta;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
@@ -114,7 +114,7 @@ public class ChatFormController implements Initializable {
     public void textSendOnAction(ActionEvent actionEvent) {
         String message = txtTextMessage.getText();
         Label messageLabel = new Label(message);
-        messageLabel.setStyle("-fx-background-color: purple;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: white;-fx-alignment: center;-fx-padding: 5px;");
+        messageLabel.setStyle("-fx-background-color: #78E08F;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
         HBox hBox = new HBox(messageLabel);
         hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
         vBox.getChildren().add(hBox);
@@ -142,7 +142,7 @@ public class ChatFormController implements Initializable {
                 imageView.setFitWidth(200);
                 imageView.setPreserveRatio(true);
                 HBox imageHbox = new HBox(imageView);
-                imageHbox.setStyle("-fx-background-color: purple;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
+                imageHbox.setStyle("-fx-background-color: #78E08F;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
                 HBox hBox = new HBox(imageHbox);
                 hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
                 vBox.getChildren().add(hBox);

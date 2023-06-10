@@ -20,6 +20,7 @@
 }
 .chat-area{
     -fx-background: linear-gradient(to right, #709fd0, #454e96);
+    -fx-background-color: linear-gradient(to right, #709fd0, #454e96);
     -fx-border-color: linear-gradient(to right, #5f89b4, #394183) ;
 }
 .btn-chat{
