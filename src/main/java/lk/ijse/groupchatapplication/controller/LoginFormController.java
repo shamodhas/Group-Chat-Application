@@ -1,13 +1,15 @@
 package lk.ijse.groupchatapplication.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lk.ijse.groupchatapplication.AppInitializer;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -24,7 +26,7 @@ public class LoginFormController {
     private static double yOffset = 0;
 
     @FXML
-    protected void onHelloButtonClick() throws IOException {
+    protected void loginOnAction() throws IOException {
         Stage stage = (Stage) txtUserName.getScene().getWindow();
         stage.setTitle("Chat Room");
         ChatFormController.userName = txtUserName.getText();
@@ -37,13 +39,15 @@ public class LoginFormController {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     public void closeOnAction(MouseEvent mouseEvent) {
-
+        Platform.exit();
     }
 
     @FXML

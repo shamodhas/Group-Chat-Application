@@ -10,52 +10,56 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancPane" prefHeight="550.0" prefWidth="600.0" style="-fx-background-color: linear-gradient( #eb92be, #ffef78, #63c9b4);" stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchatapplication.controller.ChatFormController">
+<AnchorPane fx:id="ancPane" prefHeight="550.0" prefWidth="600.0" styleClass="chat-pane" stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchatapplication.controller.ChatFormController">
    <children>
-      <ScrollPane fx:id="scPane" layoutY="97.0" prefHeight="372.0" prefWidth="604.0" style="-fx-background-radius: 20; -fx-background-color: transparent;">
+      <ScrollPane fx:id="scPane" layoutY="60.0" prefHeight="410.0" prefWidth="604.0" styleClass="chat-area">
          <content>
-            <VBox fx:id="vBox" />
+            <VBox fx:id="vBox" styleClass="chat-area" />
          </content>
       </ScrollPane>
-      <Label fx:id="lblClientName" layoutX="92.0" layoutY="37.0" text="User name">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Circle fx:id="showProPic" layoutX="54.0" layoutY="54.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="50.0" fitWidth="42.0" layoutX="33.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/user.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="86.0" fitWidth="100.0" layoutX="457.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/live-chat.png" />
-         </image>
-      </ImageView>
-      <HBox layoutX="12.0" layoutY="478.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
+      <HBox alignment="CENTER" layoutX="12.0" layoutY="478.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
          <children>
             <TextField fx:id="txtTextMessage" prefHeight="42.0" prefWidth="410.0" promptText="Write messages here...." styleClass="msgBox" />
-            <Button mnemonicParsing="false" onAction="#emojiSendOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #63c9b4;">
+            <Button mnemonicParsing="false" onAction="#emojiSendOnAction" prefHeight="40.0" prefWidth="40.0" styleClass="btn-chat">
                <graphic>
                   
-                  <FontAwesomeIconView size="20" text="" />
+                        <FontAwesomeIconView fill="WHITE" size="20" text="" />
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#imageSendOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #63c9b4;" textFill="#171717">
+            <Button mnemonicParsing="false" onAction="#imageSendOnAction" prefHeight="40.0" prefWidth="40.0" styleClass="btn-chat" textFill="#171717">
                <graphic>
-                  <FontAwesomeIconView glyphName="" size="20" text="" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="" size="20" text="" />
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#textSendOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #63c9b4;">
+            <Button mnemonicParsing="false" onAction="#textSendOnAction" prefHeight="55.0" prefWidth="55.0" styleClass="btn-chat">
                <graphic>
-                  <FontAwesomeIconView glyphName="SEND" size="40" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="SEND" size="30" />
                </graphic>
             </Button>
          </children>
       </HBox>
+      <HBox alignment="CENTER" layoutX="548.0" layoutY="21.0" spacing="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <FontAwesomeIconView glyphName="MINUS" onMouseClicked="#minimizeOnAction" size="20" />
+            <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#closeOnAction" size="20" />
+         </children>
+      </HBox>
+      <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="31.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="6.0">
+         <image>
+            <Image url="@../assets/user2.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="98.0" layoutY="9.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="lblClientName" text="User name" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="online" textFill="#04ff00" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

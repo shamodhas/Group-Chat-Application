@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: B0D8DA;" styleClass="left-pane" stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchatapplication.controller.LoginFormController">
    <AnchorPane layoutX="110.0" layoutY="5.0" prefHeight="341.0" prefWidth="260.0" styleClass="right-pane" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
       <children>
-         <JFXButton layoutX="101.0" layoutY="210.0" onAction="#onHelloButtonClick" prefHeight="42.0" prefWidth="168.0" ripplerFill="#838586" style="-fx-background-color: #3498db; -fx-background-radius: 30;" text="LOG IN" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <JFXButton layoutX="101.0" layoutY="210.0" onAction="#loginOnAction" prefHeight="42.0" prefWidth="168.0" ripplerFill="#838586" style="-fx-background-color: #3498db; -fx-background-radius: 30;" text="LOG IN" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
             <font>
                <Font name="System Bold" size="14.0" />
             </font>

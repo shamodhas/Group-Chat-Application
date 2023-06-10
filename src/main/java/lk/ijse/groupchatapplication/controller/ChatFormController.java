@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -38,17 +39,18 @@ public class ChatFormController implements Initializable {
     public ScrollPane scPane;
     @FXML
     public VBox vBox;
-    public static String userName;
+    @FXML
     public Label lblClientName;
-    public Circle showProPic;
     @FXML
     public TextField txtTextMessage;
+    public static String userName;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            lblClientName.setText(userName);
             Socket socket = new Socket("localhost", 1234);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -157,5 +159,14 @@ public class ChatFormController implements Initializable {
         // For example, you can use a dialog or a custom emoji picker component
         String selectedEmoji = "🙂";
         txtTextMessage.appendText(selectedEmoji);
+    }
+
+    @FXML
+    public void minimizeOnAction(MouseEvent mouseEvent) {
+    }
+
+    @FXML
+    public void closeOnAction(MouseEvent mouseEvent) {
+        Platform.exit();
     }
 }
