@@ -63,7 +63,6 @@ public class ChatFormController implements Initializable {
             try {
                 while (true) {
                     String[] data = bufferedReader.readLine().split("/#sendingClientName#/");
-                    System.out.println(Arrays.toString(data));
                     String clientName = data[0];
                     String message = data[1];
                     if (message != null) {
@@ -117,7 +116,6 @@ public class ChatFormController implements Initializable {
         HBox hBox = new HBox(messageLabel);
         hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
         vBox.getChildren().add(hBox);
-//        Platform.runLater(() -> {});
         if (!message.isEmpty()) {
             try {
                 sendMessage(message);
@@ -138,7 +136,6 @@ public class ChatFormController implements Initializable {
                 byte[] imageData = Files.readAllBytes(file.toPath());
                 String encodedImage = Base64.getEncoder().encodeToString(imageData);
                 String message = "Image:" + encodedImage;
-
                 ImageView imageView = new ImageView(new Image(file.getPath()));
                 imageView.setFitWidth(200);
                 imageView.setPreserveRatio(true);
@@ -147,7 +144,6 @@ public class ChatFormController implements Initializable {
                 HBox hBox = new HBox(imageHbox);
                 hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
                 vBox.getChildren().add(hBox);
-
                 sendMessage(message);
             } catch (IOException e) {
                 e.printStackTrace();
