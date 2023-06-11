@@ -155,10 +155,13 @@ public class ChatFormController implements Initializable {
 
     @FXML
     public void emojiSendOnAction(ActionEvent actionEvent) {
-        // Replace with your own implementation to handle emoji selection and append it to the message field
-        // For example, you can use a dialog or a custom emoji picker component
         String selectedEmoji = "🙂";
         txtTextMessage.appendText(selectedEmoji);
+        try {
+            sendMessage(selectedEmoji);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

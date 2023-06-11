@@ -16,7 +16,7 @@
    <children>
       <ScrollPane fx:id="scPane" layoutY="60.0" prefHeight="410.0" prefWidth="604.0" styleClass="chat-area">
          <content>
-            <VBox fx:id="vBox" styleClass="chat-area" />
+            <VBox fx:id="vBox" prefWidth="200.0" styleClass="chat-area" />
          </content>
       </ScrollPane>
       <HBox alignment="CENTER" layoutX="12.0" layoutY="478.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
