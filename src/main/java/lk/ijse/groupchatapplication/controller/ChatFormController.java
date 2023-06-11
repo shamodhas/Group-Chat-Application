@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -13,16 +12,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.ResourceBundle;
 
@@ -63,35 +59,41 @@ public class ChatFormController implements Initializable {
         }
         Thread messageReceiver = new Thread(()->{
             try {
+
                 while (true) {
+                    Label lblName = new Label();
+                    lblName.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
+
+                    Label lblMessage = new Label();
+                    lblMessage.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
+
+                    ImageView imgReserved = new ImageView();
+                    imgReserved.setFitWidth(200);
+                    imgReserved.setPreserveRatio(true);
+
                     String[] data = bufferedReader.readLine().split("/#sendingClientName#/");
                     String clientName = data[0];
                     String message = data[1];
                     if (message != null) {
                         Platform.runLater(() -> {
+                            HBox hBoxMessage = new HBox();
+                            hBoxMessage.setSpacing(10);
+                            hBoxMessage.setStyle("-fx-alignment: center-left;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
+
+                            lblName.setText(clientName);
                             if (message.startsWith("Image:")) {
                                 byte[] imageData = Base64.getDecoder().decode(message.substring(6));
-                                ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(imageData)));
-                                imageView.setFitWidth(200);
-                                imageView.setPreserveRatio(true);
-                                HBox imageHbox = new HBox(imageView);
-                                Label lblName = new Label(clientName);
-                                lblName.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
-                                imageHbox.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
-                                HBox hBox = new HBox(lblName, imageHbox);
-                                hBox.setSpacing(10);
-                                hBox.setStyle("-fx-alignment: center-left;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
-                                vBox.getChildren().add(hBox);
+                                imgReserved.setImage(new Image(new ByteArrayInputStream(imageData)));
+
+                                HBox hBoxImage = new HBox(imgReserved);
+                                hBoxImage.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
+
+                                hBoxMessage.getChildren().addAll(lblName, hBoxImage);
                             } else {
-                                Label messageLabel = new Label(message);
-                                messageLabel.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
-                                Label lblName = new Label(clientName);
-                                lblName.setStyle("-fx-background-color: #82CCDD;-fx-background-radius:15;-fx-font-size: 13;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
-                                HBox hBox = new HBox(lblName, messageLabel);
-                                hBox.setSpacing(10);
-                                hBox.setStyle("-fx-alignment: center-lefta;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
-                                vBox.getChildren().add(hBox);
+                                lblMessage.setText(message);
+                                hBoxMessage.getChildren().addAll(lblName, lblMessage);
                             }
+                            vBox.getChildren().add(hBoxMessage);
                         });
                     }
                 }
@@ -103,7 +105,9 @@ public class ChatFormController implements Initializable {
         messageReceiver.start();
     }
 
-    private void sendMessage(String message) throws IOException {
+    private void sendMessage(String message, HBox hBox) throws IOException {
+        hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
+        vBox.getChildren().add(hBox);
         message = userName+"/#sendingClientName#/"+message;
         bufferedWriter.write(message);
         bufferedWriter.newLine();
@@ -114,13 +118,10 @@ public class ChatFormController implements Initializable {
     public void textSendOnAction(ActionEvent actionEvent) {
         String message = txtTextMessage.getText();
         Label messageLabel = new Label(message);
-        messageLabel.setStyle("-fx-background-color: #78E08F;-fx-background-radius:15;-fx-font-size: 16;-fx-text-fill: #000000;-fx-alignment: center;-fx-padding: 5px;");
-        HBox hBox = new HBox(messageLabel);
-        hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
-        vBox.getChildren().add(hBox);
+        messageLabel.setStyle("-fx-background-color: #78E08F;-fx-background-radius:15;-fx-font-size: 16;-fx-alignment: center;-fx-padding: 5px;");
         if (!message.isEmpty()) {
             try {
-                sendMessage(message);
+                sendMessage(message, new HBox(messageLabel));
                 txtTextMessage.clear();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -141,12 +142,11 @@ public class ChatFormController implements Initializable {
                 ImageView imageView = new ImageView(new Image(file.getPath()));
                 imageView.setFitWidth(200);
                 imageView.setPreserveRatio(true);
+
                 HBox imageHbox = new HBox(imageView);
                 imageHbox.setStyle("-fx-background-color: #78E08F;-fx-background-radius:15;-fx-alignment: center;-fx-padding: 20px 5px;");
-                HBox hBox = new HBox(imageHbox);
-                hBox.setStyle("-fx-alignment: center-right;-fx-pref-width: 584;-fx-padding: 10px 0 0 0");
-                vBox.getChildren().add(hBox);
-                sendMessage(message);
+
+                sendMessage(message, new HBox(imageHbox));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -158,7 +158,7 @@ public class ChatFormController implements Initializable {
         String selectedEmoji = "🙂";
         txtTextMessage.appendText(selectedEmoji);
         try {
-            sendMessage(selectedEmoji);
+            sendMessage(selectedEmoji, new HBox());
         } catch (IOException e) {
             e.printStackTrace();
         }

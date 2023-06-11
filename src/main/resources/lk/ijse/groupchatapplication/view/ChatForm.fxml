@@ -14,9 +14,9 @@
 
 <AnchorPane fx:id="ancPane" prefHeight="550.0" prefWidth="600.0" styleClass="chat-pane" stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchatapplication.controller.ChatFormController">
    <children>
-      <ScrollPane fx:id="scPane" layoutY="60.0" prefHeight="410.0" prefWidth="604.0" styleClass="chat-area">
+      <ScrollPane fx:id="scPane" fitToWidth="true" layoutY="60.0" prefHeight="410.0" prefWidth="604.0" styleClass="chat-area">
          <content>
-            <VBox fx:id="vBox" prefWidth="200.0" styleClass="chat-area" />
+            <VBox fx:id="vBox" layoutX="5.0" prefWidth="590.0" styleClass="chat-area" />
          </content>
       </ScrollPane>
       <HBox alignment="CENTER" layoutX="12.0" layoutY="478.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
